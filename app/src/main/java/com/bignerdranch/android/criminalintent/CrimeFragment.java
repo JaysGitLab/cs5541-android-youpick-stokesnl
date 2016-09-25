@@ -1,6 +1,10 @@
 package com.bignerdranch.android.criminalintent;
 
 import android.os.Bundle;
+
+import java.text.DateFormat;
+import java.text.Format;
+
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +25,7 @@ public class CrimeFragment extends Fragment
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private String changed;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -52,9 +57,9 @@ public class CrimeFragment extends Fragment
         });
 
         mDateButton = (Button)v.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getDate().toString());
+        changed = DateFormat.getDateInstance().format(mCrime.getDate());
+        mDateButton.setText(changed);
         mDateButton.setEnabled(false);
-
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
