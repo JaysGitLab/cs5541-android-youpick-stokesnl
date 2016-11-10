@@ -1,2 +1,2 @@
-# hello
-A playful project to learn git.
+# android-empty
+A mostly empty Android repo (readme and Java ignore).
