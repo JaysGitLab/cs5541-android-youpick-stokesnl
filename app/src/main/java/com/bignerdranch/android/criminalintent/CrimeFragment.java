@@ -52,6 +52,13 @@ public class CrimeFragment extends Fragment
     private ImageView mPhotoView;
     private File mPhotoFile;
 
+    private Callbacks mCallbacks;
+
+    public interface Callbacks
+    {
+        void onCrimeUpdated(Crime crime);
+    }
+
     public CrimeFragment() {
     }
 
@@ -64,6 +71,7 @@ public class CrimeFragment extends Fragment
         if(requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
+            updateCrime();
             updateDate(mCrime.getDate().toString());
         }
         else if (requestCode == REQUEST_CONTACT && data != null)
@@ -82,6 +90,7 @@ public class CrimeFragment extends Fragment
                 c.moveToFirst();
                 String suspect = c.getString(0);
                 mCrime.setSuspect(suspect);
+                updateCrime();
                 mSuspectButton.setText(suspect);
             }
             finally
@@ -92,8 +101,15 @@ public class CrimeFragment extends Fragment
         }
         else if(requestCode == REQUEST_PHOTO)
         {
+            updateCrime();
             updatePhotoView();
         }
+    }
+
+    public void updateCrime()
+    {
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onCrimeUpdated(mCrime);
     }
 
     private void updateDate(String text) {
@@ -151,6 +167,13 @@ public class CrimeFragment extends Fragment
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -165,6 +188,13 @@ public class CrimeFragment extends Fragment
         super.onPause();
 
         CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
+    @Override
+    public void onDetach()
+    {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -182,6 +212,7 @@ public class CrimeFragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                updateCrime();
             }
 
             @Override
@@ -215,6 +246,7 @@ public class CrimeFragment extends Fragment
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //Set the cimres solved property
                 mCrime.setSolved(isChecked);
+                updateCrime();
             }
         });
 

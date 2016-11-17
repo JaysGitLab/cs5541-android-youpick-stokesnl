@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CriminalIntent.iml" filepath="$PROJECT_DIR$/CriminalIntent.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cs5541-android-officecrime-stokesnl.iml" filepath="$PROJECT_DIR$/cs5541-android-officecrime-stokesnl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cs5541-android-youpick-stokesnl.iml" filepath="$PROJECT_DIR$/cs5541-android-youpick-stokesnl.iml" />
     </modules>
   </component>
 </project>
